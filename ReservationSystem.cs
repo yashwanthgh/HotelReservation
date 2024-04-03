@@ -9,9 +9,11 @@ namespace HotelReservationSystem
 {
     public class ReservationSystem
     {
-        public void Display()
+        readonly List<Hotel> hotels = [];
+
+        public ReservationSystem(string name, int rating, Decimal weekDay, Decimal weekendDay)
         {
-            Console.WriteLine("Welcome to Hotel Registration System");
+            hotels.Add(new Hotel(name, rating, weekDay, weekendDay));
         }
     }
 }
