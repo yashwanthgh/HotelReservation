@@ -36,6 +36,33 @@ namespace HotelReservationSystem
             return cheapestHotel;
         }
 
+        public Hotel? FindCheapestHotelsForGivenDate(DateTime from, DateTime to)
+        {
+            decimal cheapestRate = decimal.MaxValue;
+            List<Hotel> cheapestHotels = new List<Hotel>();
+
+            foreach (Hotel hotel in hotels)
+            {
+                decimal totalCost = CalculateTotalCost(hotel, from, to);
+                if (totalCost < cheapestRate)
+                {
+                    cheapestRate = totalCost;
+                    cheapestHotels.Clear();
+                    cheapestHotels.Add(hotel);
+                }
+                else if (totalCost == cheapestRate)
+                {
+                    cheapestHotels.Add(hotel);
+                }
+            }
+
+            foreach (Hotel hotel in cheapestHotels)
+            {
+                return hotel;
+            }
+            return null;
+        }
+
         private Decimal CalculateTotalCost(Hotel hotel, DateTime from, DateTime to)
         {
             decimal total = 0;
