@@ -10,7 +10,6 @@ namespace HotelReservationSystem
     public class ReservationSystem
     {
         readonly List<Hotel> hotels = [];
-
         public ReservationSystem()
         {
             hotels.Add(new Hotel("LakeWood", 3, 110, 90));
@@ -75,6 +74,32 @@ namespace HotelReservationSystem
             }
             return cheapestBestRatedHotel;
 
+        }
+
+        public Hotel? FindBestRatedHotelForGivenDate(DateTime from, DateTime to)
+        {
+            int maxRating = 0;
+            Hotel? bestRatedHotel = null;
+
+            foreach (Hotel hotel in hotels)
+            {
+                if (hotel.Rating > maxRating)
+                {
+                    maxRating = hotel.Rating;
+                    bestRatedHotel = hotel;
+                }
+            }
+
+            if (bestRatedHotel != null)
+            {
+                decimal totalCost = CalculateTotalCost(bestRatedHotel, from, to);
+                bestRatedHotel.TotalCost = totalCost;
+                return bestRatedHotel;
+            }
+            else
+            {
+                return null;
+            }
         }
         private Decimal CalculateTotalCost(Hotel hotel, DateTime from, DateTime to)
         {

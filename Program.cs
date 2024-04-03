@@ -12,6 +12,9 @@ internal class Program
         Hotel? findCheapestHotelsForGivenDate = reservationSystem.CheepHotelsForGivenDate(from, to);
         Console.WriteLine($"Hotel is: {findCheapestHotelsForGivenDate?.Name} Rate is: {findCheapestHotelsForGivenDate?.TotalCost} ");
         Hotel? cheapestBestRatedHotel = reservationSystem.FindCheapestBestRatedHotel(from, to);
-        Console.WriteLine($"{cheapestBestRatedHotel.Name}, Rating: {cheapestBestRatedHotel.Rating} and Total Rates: ${cheapestBestRatedHotel.TotalCost}");
+        Console.WriteLine($"{cheapestBestRatedHotel?.Name}, Rating: {cheapestBestRatedHotel?.Rating} and Total Rates: ${cheapestBestRatedHotel?.TotalCost}");
+        Hotel? findBestRatedHotelForGivenDate = reservationSystem.FindBestRatedHotelForGivenDate(from, to);
+        Console.WriteLine($"Hotel is: {findBestRatedHotelForGivenDate?.Name} Total Rate: {findBestRatedHotelForGivenDate?.TotalCost}");
     }
+   
 }
