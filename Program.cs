@@ -1,20 +1,33 @@
-﻿using HotelReservationSystem;
+﻿using System;
 
-internal class Program
+namespace HotelReservationSystem
 {
-    public static void Main(string[] args)
+    class Program
     {
-        ReservationSystem reservationSystem = new();
-        DateTime from = DateTime.Parse("10Sep2020");
-        DateTime to = DateTime.Parse("11Sep2020");
-        Hotel? hotel = reservationSystem.CheepHotelsForGivenDate(from, to);
-        Console.WriteLine($"Hotel is: {hotel?.Name} Rate is: {hotel?.TotalCost}");
-        Hotel? findCheapestHotelsForGivenDate = reservationSystem.CheepHotelsForGivenDate(from, to);
-        Console.WriteLine($"Hotel is: {findCheapestHotelsForGivenDate?.Name} Rate is: {findCheapestHotelsForGivenDate?.TotalCost} ");
-        Hotel? cheapestBestRatedHotel = reservationSystem.FindCheapestBestRatedHotel(from, to);
-        Console.WriteLine($"{cheapestBestRatedHotel?.Name}, Rating: {cheapestBestRatedHotel?.Rating} and Total Rates: ${cheapestBestRatedHotel?.TotalCost}");
-        Hotel? findBestRatedHotelForGivenDate = reservationSystem.FindBestRatedHotelForGivenDate(from, to);
-        Console.WriteLine($"Hotel is: {findBestRatedHotelForGivenDate?.Name} Total Rate: {findBestRatedHotelForGivenDate?.TotalCost}");
+        static void Main(string[] args)
+        {
+            ReservationSystem reservationSystem = new ReservationSystem();
+            DateTime from = DateTime.Parse("10Sep2020");
+            DateTime to = DateTime.Parse("11Sep2020");
+            bool isRewarded = true;
+
+           
+            Hotel? cheapestHotel = reservationSystem.CheapestHotelForGivenDate(from, to, isRewarded);
+            Console.WriteLine($"Cheapest Hotel is: {cheapestHotel?.Name}, Rate is: {cheapestHotel?.TotalCost}");
+
+           
+            List<Hotel>? findCheapestHotelsForGivenDate = reservationSystem.FindCheapestHotelsForGivenDate(from, to, isRewarded);
+            foreach (Hotel hotel in findCheapestHotelsForGivenDate)
+            {
+                Console.WriteLine($"Cheapest Hotel is: {hotel?.Name}, Rate is: {hotel?.TotalCost}");
+            }
+
+            Hotel? cheapestBestRatedHotel = reservationSystem.CheapestBestRatedHotelForGivenDate(from, to, isRewarded);
+            Console.WriteLine($"Cheapest Best Rated Hotel: {cheapestBestRatedHotel?.Name}, Rating: {cheapestBestRatedHotel?.Rating}, Total Rates: ${cheapestBestRatedHotel?.TotalCost}");
+
+            Hotel? findBestRatedHotelForGivenDate = reservationSystem.FindBestRatedHotelForGivenDateAndRewardStatus(from, to, isRewarded);
+            Console.WriteLine($"Best Rated Hotel is: {findBestRatedHotelForGivenDate?.Name}, Total Rate: {findBestRatedHotelForGivenDate?.TotalCost}");
+        }
     }
-   
 }
+
