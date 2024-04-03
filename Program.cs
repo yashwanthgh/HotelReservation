@@ -4,9 +4,10 @@ internal class Program
 {
     public static void Main(string[] args)
     {
-       
-        ReservationSystem lakeWood = new("LakeWood", 3, 110, 90);
-        ReservationSystem bridgeWood = new("BridgeWood", 4, 160, 60);
-        ReservationSystem ridgeWood = new("RidgeWood", 5, 220, 150);
+        ReservationSystem reservationSystem = new ();
+        DateTime from = DateTime.Parse("10Sep2020");
+        DateTime to = DateTime.Parse("11Sep2020");
+        Hotel? hotel = reservationSystem.CheepHotelsForGivenDate(from, to);
+        Console.WriteLine($"Hotel is: {hotel?.Name} Rate is: {hotel?.TotalCost}");
     }
 }
