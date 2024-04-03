@@ -22,7 +22,6 @@ namespace HotelReservationSystem
         {
             Decimal maxCost = Decimal.MaxValue;
             Hotel? cheapestHotel = null;
-
             foreach (Hotel hotel in hotels)
             {
                 hotel.TotalCost = CalculateTotalCost(hotel, from, to);
@@ -32,7 +31,6 @@ namespace HotelReservationSystem
                     cheapestHotel = hotel;
                 }
             }
-
             return cheapestHotel;
         }
 
@@ -55,7 +53,6 @@ namespace HotelReservationSystem
                     cheapestHotels.Add(hotel);
                 }
             }
-
             foreach (Hotel hotel in cheapestHotels)
             {
                 return hotel;
@@ -63,6 +60,22 @@ namespace HotelReservationSystem
             return null;
         }
 
+        public Hotel? FindCheapestBestRatedHotel(DateTime from, DateTime to)
+        {
+            decimal cheapestRate = decimal.MaxValue;
+            Hotel? cheapestBestRatedHotel = null;
+            foreach (Hotel hotel in hotels)
+            {
+                decimal totalCost = CalculateTotalCost(hotel, from, to);
+                if (totalCost < cheapestRate || (totalCost == cheapestRate && hotel.Rating > cheapestBestRatedHotel?.Rating))
+                {
+                    cheapestRate = totalCost;
+                    cheapestBestRatedHotel = hotel;
+                }
+            }
+            return cheapestBestRatedHotel;
+
+        }
         private Decimal CalculateTotalCost(Hotel hotel, DateTime from, DateTime to)
         {
             decimal total = 0;
