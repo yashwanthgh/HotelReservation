@@ -36,7 +36,7 @@ namespace HotelReservationSystem
         public List<Hotel> FindCheapestHotelsForGivenDate(DateTime from, DateTime to, bool isRewardCustomer)
         {
             decimal cheapestRate = decimal.MaxValue;
-            List<Hotel> cheapestHotels = new List<Hotel>();
+            List<Hotel> cheapestHotels = [];
 
             foreach (Hotel hotel in hotels)
             {
@@ -53,9 +53,13 @@ namespace HotelReservationSystem
                 }
             }
 
+            foreach (Hotel hotel in cheapestHotels)
+            {
+                hotel.TotalCost = cheapestRate;
+            }
+
             return cheapestHotels;
         }
-
 
         public Hotel? FindBestRatedHotelForGivenDateAndRewardStatus(DateTime from, DateTime to, bool isRewardCustomer)
         {
@@ -114,5 +118,45 @@ namespace HotelReservationSystem
             totalCost = weekendDays * weekendRate + weekDays * weekdayRate;
             return totalCost;
         }
+
+        public Hotel? FindCheapestBestRatedHotelForGivenDateRange(DateTime fromDate, DateTime toDate, bool isRewardCustomer)
+        {
+            ValidateDateRange(fromDate, toDate);
+            ValidateCustomerType(isRewardCustomer);
+
+            decimal minCost = decimal.MaxValue;
+            Hotel? cheapestBestRatedHotel = null;
+
+            foreach (Hotel hotel in hotels)
+            {
+                decimal totalCost = CalculateTotalCost(hotel, fromDate, toDate, isRewardCustomer);
+                if (totalCost < minCost || (totalCost == minCost && hotel.Rating > cheapestBestRatedHotel?.Rating))
+                {
+                    minCost = totalCost;
+                    cheapestBestRatedHotel = hotel;
+                    cheapestBestRatedHotel.TotalCost = totalCost;
+                }
+            }
+
+            return cheapestBestRatedHotel;
+        }
+
+        private void ValidateDateRange(DateTime fromDate, DateTime toDate)
+        {
+            if (fromDate >= toDate)
+            {
+                throw new ArgumentException("End date must be after start date.");
+            }
+        }
+
+        private void ValidateCustomerType(bool isRewardCustomer)
+        {
+            if (isRewardCustomer != true && isRewardCustomer != false)
+            {
+                throw new ArgumentException("Invalid value for customer type. Please enter 'true' for reward customer or 'false' for regular customer.");
+            }
+        }
+
+
     }
 }
