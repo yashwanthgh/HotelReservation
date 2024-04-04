@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace HotelReservationSystem
 {
@@ -157,6 +158,15 @@ namespace HotelReservationSystem
             }
         }
 
+        public void ProperFormate(DateTime from, DateTime to)
+        {
+            string pattern = @"\d{2}\w{3}\d{4}"; 
+            Regex regex = new Regex(pattern);
+            if (!regex.IsMatch(from.ToString("ddMMMyyyy")) || !regex.IsMatch(to.ToString("ddMMMyyyy")))
+            {
+                throw new FormatException("Invalid format");
+            }
+        }
 
     }
 }

@@ -29,10 +29,12 @@ namespace HotelReservationSystem
 
                 Hotel? findBestRatedHotelForGivenDate = reservationSystem.FindBestRatedHotelForGivenDateAndRewardStatus(from, to, isRewarded);
                 Console.WriteLine($"Best Rated Hotel is: {findBestRatedHotelForGivenDate?.Name}, Total Rate: {findBestRatedHotelForGivenDate?.TotalCost}");
+
+                reservationSystem.ProperFormate(from, to);
             }
             catch (FormatException)
             {
-                Console.WriteLine("Invalid date or customer type format.");
+                Console.WriteLine("Invalid date type format.");
             }
             catch (ArgumentException ex)
             {
